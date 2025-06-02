@@ -234,7 +234,8 @@ function drawStartScreen() {
   background1();
 
   let mainText = "NATURE";
-  let subText = "INSERT A COIN TO CONTINUE";
+  let subText = "CLICK TO CONTINUE";
+  let explainText = "GRAB AND MOVE THE RED BOX TO THE CHARACTER";
 
   textAlign(CENTER, CENTER);
 
@@ -260,6 +261,11 @@ function drawStartScreen() {
     fill(0);
     text(subText, width / 2, height / 2 + 30 * scaleY);
   }
+
+  stroke(255);
+  strokeWeight(0);
+  fill(0);
+  text(explainText, width / 2, height / 2 + 50 * scaleY);  
 }
 
 function drawCredit() {
