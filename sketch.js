@@ -702,7 +702,7 @@ function nextCharacter() {
 function isNearObject(x, y) {
   let d = dist(x, y, objectX, objectY);
   console.log("📏 박스까지 거리:", d.toFixed(2));
-  return d < 50; // 이 값이 작으면 인식이 빡빡함
+  return d < 100; // 이 값이 작으면 인식이 빡빡함
 }
 
 
@@ -712,7 +712,7 @@ function isNearCharacter(x, y) {
   // 화면 좌표계로 변환 필요
   let cx = characterX / width * 640;
   let cy = characterY / height * 480;
-  return dist(x, y, cx, cy) < 50;
+  return dist(x, y, cx, cy) < 100;
 }
 
 function gotHands(results) {
