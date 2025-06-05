@@ -701,7 +701,7 @@ function nextCharacter() {
 
 function isNearObject(x, y) {
   let d = dist(x, y, objectX, objectY);
-  console.log("📏 박스까지 거리:", d.toFixed(2));
+  
   return d < 100; // 이 값이 작으면 인식이 빡빡함
 }
 
