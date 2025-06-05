@@ -242,6 +242,10 @@ function draw() {
   }
 }
 
+  if (hands.length > 0) {
+  console.log(hands[0].keypoints.map(k => k.name));
+}
+
 }
 
 function windowResized() {
