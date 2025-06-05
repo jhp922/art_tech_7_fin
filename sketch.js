@@ -602,26 +602,24 @@ function drawHands() {
 }
 
 function updateHandState() {
-  if (hands.length === 0) {
-    isGrabbing = false;
-    return;
-  }
-  let hand = hands[0]; // 첫 번째 손만 사용
-  let thumbTip = hand.keypoints.find(k => k.name === "thumb_tip");
-  let indexTip = hand.keypoints.find(k => k.name === "index_finger_tip");
+if (thumbTip && indexTip) {
+  let thumbX = thumbTip.x / 640 * width;
+  let thumbY = thumbTip.y / 480 * height;
+  let indexX = indexTip.x / 640 * width;
+  let indexY = indexTip.y / 480 * height;
 
-  if (thumbTip && indexTip) {
-    let d = dist(thumbTip.x, thumbTip.y, indexTip.x, indexTip.y);
-    if (d < 40) { // 비디오 픽셀 기준
-      if (!isGrabbing && objectVisible && isNearObject(indexTip.x, indexTip.y)) {
-        isGrabbing = true;
-        offsetX = objectX - indexTip.x;
-        offsetY = objectY - indexTip.y;
-      }
-    } else {
-      isGrabbing = false;
+  let d = dist(thumbX, thumbY, indexX, indexY);
+  if (d < 40) {
+    if (!isGrabbing && objectVisible && isNearObject(indexX, indexY)) {
+      isGrabbing = true;
+      offsetX = objectX - indexX;
+      offsetY = objectY - indexY;
     }
+  } else {
+    isGrabbing = false;
   }
+}
+
 }
 
 function updateObjectPosition() {
