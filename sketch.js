@@ -91,6 +91,13 @@ let characterAppearFrame = 0;
 let characterAppearDuration = 32; // 32프레임(약 1.5초)
 let characterAppearDone = false;
 
+// 새 관련 변수
+let birdImgs = [];
+let birdX = 0;
+let baseY = 0;
+let showBird = false;
+let frameToggle1 = false;
+
 // === 비율 스케일 관련 ===
 const BASE_WIDTH = 800;
 const BASE_HEIGHT = 450;
@@ -145,6 +152,9 @@ function preload() {
   walkImgs[2] = loadImage('adult_walk2.png');
   standImgs[3] = loadImage('old_walk.png');
   walkImgs[3] = loadImage('old_walk2.png');
+
+  birdImgs[0] = loadImage('bird1.png');
+  birdImgs[1] = loadImage('bird2.png');
 }
 
 function setup() {
@@ -218,6 +228,20 @@ function draw() {
     state = "credit";
     creditY = height;
   }
+
+  if (state === "game" && (sence === 2 || sence === 3)) {
+  if (random(1) < 0.005 && !showBird) {
+    birdX = random(100 * scaleX, 700 * scaleX);
+    baseY = random(100 * scaleY, 200 * scaleY);
+    showBird = true;
+  }
+
+  if (showBird) {
+    if (frameCount % 6 === 0) frameToggle1 = !frameToggle1;
+    drawBird();
+  }
+}
+
 }
 
 function windowResized() {
@@ -623,16 +647,15 @@ if (thumbTip && indexTip) {
 }
 
 function updateObjectPosition() {
-  if (!isGrabbing || !objectVisible) return;
-  if (hands.length === 0) return;
-
-  let hand = hands[0];
   let indexTip = hand.keypoints.find(k => k.name === "index_finger_tip");
   if (indexTip) {
-    objectX = indexTip.x + offsetX;
-    objectY = indexTip.y + offsetY;
+    let indexX = indexTip.x / 640 * width;
+    let indexY = indexTip.y / 480 * height;
+    objectX = indexX + offsetX;
+    objectY = indexY + offsetY;
   }
 }
+
 
 function nextCharacter() {
   sence += 1;
@@ -665,6 +688,7 @@ function isNearObject(x, y) {
   return dist(x, y, objectX, objectY) < 50;
 }
 
+
 function isNearCharacter(x, y) {
   // objectX, objectY(비디오 픽셀 기준)와 characterX, characterY(화면 기준) 비교
   // 화면 좌표계로 변환 필요
@@ -675,4 +699,12 @@ function isNearCharacter(x, y) {
 
 function gotHands(results) {
   hands = results;
+}
+
+
+//--------새 움직임 함수
+function drawBird(){
+  let birdY = baseY + sin(frameCount * 0.1) * 20 * scaleY;
+  
+  image(frameToggle1 ? birdImgs[0] : birdImgs[1], birdX, birdY, 100 * scaleX, 100 * scaleY);
 }
