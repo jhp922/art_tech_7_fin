@@ -187,6 +187,12 @@ function setup() {
   characterAppearDone = false;
 }
 
+function updateScaleFactors() {
+  scaleX = width / BASE_WIDTH;
+  scaleY = height / BASE_HEIGHT;
+}
+
+
 function draw() {
   if (state === "start") {
     drawStartScreen();
