@@ -81,7 +81,7 @@ let openHandImg, closedHandImg;
 let standImgs = [], walkImgs = [];
 
 let currentAge = 0;
-let characterX = 750, characterY = 700;
+let characterX = 750 * scaleX, characterY = 700 * scaleY;
 let isGiven = false;
 let frameToggle = false;
 
@@ -211,7 +211,7 @@ function draw() {
   updateHandState();
   updateObjectPosition();
 
-  if (objectVisible && isNearCharacter(objectX, objectY)) {
+  if (objectVisible && isGrabbing && isNearCharacter(objectX, objectY)) {
     objectVisible = false;
     isGiven = true;
   }
@@ -634,6 +634,12 @@ function updateHandState() {
   }
 
   let hand = hands[0];
+
+  if (hand && hand.keypoints) {
+    if (hand.handInViewConfidence && hand.handInViewConfidence < 0.75) return;
+    if (hand.keypoints.length < 10) return;
+  }
+  
   let thumbTip = hand.keypoints.find(k => k.name === "thumb_tip");
   let indexTip = hand.keypoints.find(k => k.name === "index_finger_tip");
 
@@ -690,11 +696,13 @@ function nextCharacter() {
       currentAge = 3;
       break;
   }
+  
   characterX = 40 * scaleX;
-  isGiven = false;
-  objectVisible = true;
   objectX = 300 * scaleX;
   objectY = 400 * scaleY;
+
+  isGiven = false;
+  objectVisible = true;
   characterAppearDone = false;
   characterAppearFrame = 0;
 }
@@ -710,9 +718,7 @@ function isNearObject(x, y) {
 function isNearCharacter(x, y) {
   // objectX, objectY(비디오 픽셀 기준)와 characterX, characterY(화면 기준) 비교
   // 화면 좌표계로 변환 필요
-  let cx = characterX / width * 640;
-  let cy = characterY / height * 480;
-  return dist(x, y, cx, cy) < 100;
+  return dist(x * scaleX, y * scaleY, characterX, characterY) < 100 * scaleX;
 }
 
 function gotHands(results) {
