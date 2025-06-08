@@ -1,4 +1,4 @@
-// 전체 수정된 코드 (캐릭터 등장 문제 해결)
+// 전체 수정된 코드 (캐릭터 등장 문제 해결, 누락 함수 포함)
 
 let state = "start"; // "start" or "game" or "credit"
 
@@ -28,6 +28,11 @@ const BASE_WIDTH = 800;
 const BASE_HEIGHT = 450;
 let scaleX = 1;
 let scaleY = 1;
+
+function updateScaleFactors() {
+  scaleX = width / BASE_WIDTH;
+  scaleY = height / BASE_HEIGHT;
+}
 
 // 캐릭터 위치
 let characterX = 0;
@@ -186,12 +191,6 @@ function setup() {
   characterAppearFrame = 0;
   characterAppearDone = false;
 }
-
-function updateScaleFactors() {
-  scaleX = width / BASE_WIDTH;
-  scaleY = height / BASE_HEIGHT;
-}
-
 
 function draw() {
   if (state === "start") {
