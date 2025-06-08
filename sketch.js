@@ -21,6 +21,17 @@ let creditTexts = [
   "박지환: 캐릭터/새 움직임, 나무 클릭"
 ];
 
+// === 비율 스케일 관련 ===
+const BASE_WIDTH = 800;
+const BASE_HEIGHT = 450;
+let scaleX = 1;
+let scaleY = 1;
+
+// 캐릭터 위치
+let characterX = 0;
+let characterY = 0;
+
+
 let background_move_n = 0;
 let background_move = false;
 
@@ -72,7 +83,7 @@ let handPose;
 let video;
 let hands = [];
 
-let objectX = 300, objectY = 400;
+let objectX = 0, objectY = 0;
 let objectVisible = true;
 let isGrabbing = false;
 let offsetX = 0, offsetY = 0;
@@ -81,7 +92,6 @@ let openHandImg, closedHandImg;
 let standImgs = [], walkImgs = [];
 
 let currentAge = 0;
-let characterX = 750 * scaleX, characterY = 700 * scaleY;
 let isGiven = false;
 let frameToggle = false;
 
@@ -171,6 +181,11 @@ function setup() {
   video.hide();
   handPose.detectStart(video, gotHands);
   frameRate(20);
+
+  characterX = 750 * scaleX, characterY = 700 * scaleY;
+
+  objectX = 300 * scaleX;
+  objectY = 400 * scaleY;
 }
 
 function draw() {
