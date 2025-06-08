@@ -108,12 +108,6 @@ let baseY = 0;
 let showBird = false;
 let frameToggle1 = false;
 
-// === 비율 스케일 관련 ===
-const BASE_WIDTH = 800;
-const BASE_HEIGHT = 450;
-let scaleX = 1;
-let scaleY = 1;
-
 function preload() {
   pixelFont = loadFont('PressStart2P-Regular.ttf');
 
