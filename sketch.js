@@ -228,7 +228,7 @@ function draw() {
   }
 
   if (objectVisible) {
-    drawRecyclingBox(objectX, objectY);
+    drawObject(objectX, objectY);
   }
 
   updateHandState();
