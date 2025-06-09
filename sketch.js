@@ -71,7 +71,10 @@ let smoke_move3 = 0;
 
 let img_ground;
 let img_ground2;
+let img_ground3;
+let img_ground4;
 let img_ground5;
+let img_ground6;
 
 let img_tree_1;
 let img_tree_2;
@@ -129,7 +132,10 @@ function preload() {
 
   img_ground = loadImage('땅.png');
   img_ground2 = loadImage('땅2.png');
+  img_ground3 = loadImage('땅3.png');
+  img_ground4 = loadImage('땅4.png');
   img_ground5 = loadImage('땅5.png');
+  img_ground5 = loadImage('땅6.png');
 
   img_cloud1 = loadImage('구름1.png');
   img_cloud2 = loadImage('구름2.png');
