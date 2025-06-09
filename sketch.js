@@ -230,10 +230,11 @@ function draw() {
   updateHandState();
   updateObjectPosition();
 
-  if (objectVisible && isGrabbing && isNearCharacter(objectX, objectY)) {
+  if (objectVisible && isGrabbing && isNearCharacter(objectX / scaleX, objectY / scaleY)) {
     objectVisible = false;
     isGiven = true;
   }
+
 
   if(fadeout_on){
     fadeout();
