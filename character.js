@@ -35,15 +35,20 @@ function drawCharacterAppearAnim() {
 }
 
 function drawCharacter(x, y, isGiven, ageIndex) {
-  let w = 100 * scaleX;
-  let h = 100 * scaleY;
+  let w = standImgs[ageIndex].width * scaleX;
+  let h = standImgs[ageIndex].height * scaleY;
+
+  push();
+  noSmooth();
   if (!isGiven) {
     image(standImgs[ageIndex], x, y, w, h);
   } else {
     if (frameCount % 6 === 0) frameToggle = !frameToggle;
     image(frameToggle ? walkImgs[ageIndex] : standImgs[ageIndex], x, y, w, h);
   }
+  pop();
 }
+
 
 function nextCharacter() {
   sence++;
