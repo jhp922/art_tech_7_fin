@@ -255,18 +255,23 @@ function draw() {
     creditY = height;
   }
 
-  if (state === "game" && (sence === 2 || sence === 3)) {
-    if (random(1) < 0.005 && !showBird) {
-      birdX = random(100 * scaleX, 700 * scaleX);
-      baseY = random(100 * scaleY, 200 * scaleY);
-      showBird = true;
-    }
-
-    if (showBird) {
-      if (frameCount % 6 === 0) frameToggle1 = !frameToggle1;
-      drawBird();
-    }
+  if (
+    state === "game" &&
+    (sence === 2 || sence === 3) &&
+    !fadeout_on && !fadeon_on
+  ) {
+  if (random(1) < 0.005 && !showBird) {
+    birdX = random(100 * scaleX, 700 * scaleX);
+    baseY = random(100 * scaleY, 200 * scaleY);
+    showBird = true;
   }
+
+  if (showBird) {
+    if (frameCount % 6 === 0) frameToggle1 = !frameToggle1;
+    drawBird();
+  }
+}
+
 }
 
 function windowResized() {
