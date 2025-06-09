@@ -1,17 +1,12 @@
-// bird.js - 새 등장 및 움직임
-
-let birdImgs = [];
-let birdX = 0;
-let baseY = 0;
-let showBird = false;
-let frameToggle1 = false;
+// --- 새 애니메이션 관련 (bird.js) ---
 
 function drawBird() {
-  let birdY = baseY + sin(frameCount * 0.1) * 20 * scaleY;
+  const birdFrame = frameToggle1 ? birdImgs[0] : birdImgs[1];
+  const size = 80 * ((scaleX + scaleY) / 2);
+  const floatOffset = sin(frameCount * 0.2) * 10 * scaleY;
+  image(birdFrame, birdX, baseY + floatOffset, size, size);
 
-  image(
-    frameToggle1 ? birdImgs[0] : birdImgs[1],
-    birdX, birdY,
-    60 * scaleX, 60 * scaleY
-  );
+  if (frameCount % 2 === 0) birdX += 3 * scaleX;
+  if (birdX > width + 50 * scaleX) showBird = false;
 }
+
