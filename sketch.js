@@ -272,7 +272,15 @@ function draw() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   updateScaleFactors();
+
+  // 기존 비율 기준 위치를 새 비율 기준으로 보정
+  characterX = 40 * scaleX;
+  characterY = 300 * scaleY;
+
+  objectX = 300 * scaleX;
+  objectY = 400 * scaleY;
 }
+
 
 function updateScaleFactors() {
   scaleX = width / BASE_WIDTH;
