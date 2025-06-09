@@ -1,20 +1,19 @@
-// sketch.js - 메인 진입점 (전역 변수 + preload/setup 포함 + draw 포함)
+// Nature Interaction by 임규빈, 오세진, 박지환
+// Fullscreen and scaling modification by Perplexity
 
+// --- 기본 상수 ---
 const BASE_WIDTH = 800;
 const BASE_HEIGHT = 450;
-let scaleX = 1;
-let scaleY = 1;
 
-let state = "start";
-let sence = 1;
-let fade = 0;
-let fadeout_on = false;
-let fadeon_on = false;
-
+// --- 전역 변수 ---
+let state = "start"; // "start" or "game" or "credit"
 let pixelFont;
 
-// 크레딧 관련
-let creditY = 500;
+// --- 동적 스케일링 변수 ---
+let scaleX, scaleY;
+
+// --- 크레딧 관련 ---
+let creditY;
 const creditTexts = [
   "기획",
   "임규빈: 애니메이션 주제, 디자인 요소 기획",
@@ -29,65 +28,123 @@ const creditTexts = [
   "개발",
   "임규빈: 배경 이동/페이드, 나무 인터랙션",
   "오세진: 손 인식, 물건 잡기, 손 효과",
-  "박지환: 캐릭터/새 움직임, 나무 클릭"
+  "박지환: 캐릭터/새 움직임, 나무 클릭",
 ];
 
-// 손 인식
+// --- 배경 및 장면 관련 ---
+let background_move_n = 0;
+let sence = 1;
+let fade = 0;
+let fadeout_on = false;
+let fadeon_on = false;
+
+// --- 이미지 변수 ---
+let img_sky, img_sky3, img_sky4, img_sky5;
+let img_ground, img_ground2, img_ground5;
+let img_cloud1, img_cloud2, img_cloud3, img_cloud4, img_cloud5, img_cloud6;
+let cloud_move_falme = 0;
+let img_factory1, img_factory2;
+let img_smoke1, img_smoke2;
+let smoke_move1 = 0, smoke_move2 = 0, smoke_move3 = 0;
+let img_tree_1, img_tree_2, img_tree_3, img_tree_4;
+let img_noleaf_tree_1, img_noleaf_tree_2, img_noleaf_tree_3;
+let img_cut_tree_1;
+let axePixel, toyImg, oilImg, phoneImg;
+let openHandImg, closedHandImg;
+
+// --- 손 인식 관련 (ml5.js) ---
 let handPose;
 let video;
 let hands = [];
+let showInstruction = true;
 let isGrabbing = false;
-let offsetX = 0, offsetY = 0;
 
-// 캐릭터
-let characterX = 0;
-let characterY = 0;
+// --- 오브젝트 및 캐릭터 관련 ---
+let objectX, objectY;
+let objectVisible = true;
+let offsetX = 0, offsetY = 0;
+const itemDescs = [
+  "CAN PLAY WITH",
+  "CUT TREE",
+  "INDUSTRIAL DEVELOPMENT",
+  "RARE MINERAL CONSUMPTION",
+];
+let standImgs = [], walkImgs = [];
 let currentAge = 0;
+let characterX, characterY;
 let isGiven = false;
 let frameToggle = false;
+
+// 캐릭터 등장 애니메이션
 let characterAppearAnim = false;
 let characterAppearFrame = 0;
 let characterAppearDuration = 32;
 let characterAppearDone = false;
 
-// 물건
-let objectX = 0, objectY = 0;
-let objectVisible = true;
-
-// 새
-let birdImgs = [];
-let birdX = 0;
-let baseY = 0;
-let showBird = false;
-let frameToggle1 = false;
-
 function preload() {
   pixelFont = loadFont("assets/PressStart2P-Regular.ttf");
 
-  birdImgs[0] = loadImage("assets/bird1.png");
-  birdImgs[1] = loadImage("assets/bird2.png");
+  img_sky = loadImage("assets/하늘.png");
+  img_sky3 = loadImage("assets/하늘3.png");
+  img_sky4 = loadImage("assets/하늘4.png");
+  img_sky5 = loadImage("assets/하늘5.png");
+
+  img_factory1 = loadImage("assets/공장1.png");
+  img_factory2 = loadImage("assets/공장2.png");
+
+  img_smoke1 = loadImage("assets/연기1.png");
+  img_smoke2 = loadImage("assets/연기2.png");
+
+  img_ground = loadImage("assets/땅.png");
+  img_ground2 = loadImage("assets/땅2.png");
+  img_ground5 = loadImage("assets/땅5.png");
+
+  img_cloud1 = loadImage("assets/구름1.png");
+  img_cloud2 = loadImage("assets/구름2.png");
+  img_cloud3 = loadImage("assets/구름3.png");
+  img_cloud4 = loadImage("assets/구름4.png");
+  img_cloud5 = loadImage("assets/구름5.png");
+  img_cloud6 = loadImage("assets/구름6.png");
+
+  img_tree_1 = loadImage("assets/나무1.png");
+  img_tree_2 = loadImage("assets/나무2.png");
+  img_tree_3 = loadImage("assets/나무3.png");
+  img_tree_4 = loadImage("assets/나무4.png");
+
+  img_noleaf_tree_1 = loadImage("assets/잎없는나무1.png");
+  img_noleaf_tree_2 = loadImage("assets/잎없는나무2.png");
+  img_noleaf_tree_3 = loadImage("assets/잎없는나무3.png");
+
+  img_cut_tree_1 = loadImage("assets/잘린나무1.png");
+
+  axePixel = loadImage("assets/axepixel.png");
+  toyImg = loadImage("assets/toy.png");
+  oilImg = loadImage("assets/oil.png");
+  phoneImg = loadImage("assets/cellphone.png");
 
   openHandImg = loadImage("assets/openHand.png");
   closedHandImg = loadImage("assets/closedHand.png");
 
-  standImgs = [
-    loadImage("assets/child_stand.png"),
-    loadImage("assets/teen_walk.png"),
-    loadImage("assets/adult_walk.png"),
-    loadImage("assets/old_walk.png")
-  ];
-
-  walkImgs = [
-    loadImage("assets/child_walk.png"),
-    loadImage("assets/teen_walk2.png"),
-    loadImage("assets/adult_walk2.png"),
-    loadImage("assets/old_walk2.png")
-  ];
+  standImgs[0] = loadImage("assets/child stand.png");
+  walkImgs[0] = loadImage("assets/child walk.png");
+  standImgs[1] = loadImage("assets/teen walk.png");
+  walkImgs[1] = loadImage("assets/teen walk 2.png");
+  standImgs[2] = loadImage("assets/adult walk.png");
+  walkImgs[2] = loadImage("assets/adult walk2.png");
+  standImgs[3] = loadImage("assets/old walk.png");
+  walkImgs[3] = loadImage("assets/old walk2.png");
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  updateScaleFactors();
+  scaleX = width / BASE_WIDTH;
+  scaleY = height / BASE_HEIGHT;
+  creditY = height;
+  objectX = 1500 * scaleX;
+  objectY = 450 * scaleY;
+  characterX = 750 * scaleX;
+  characterY = 450 * scaleY;
+
   textFont(pixelFont);
   noSmooth();
   rectMode(CENTER);
@@ -98,31 +155,19 @@ function setup() {
   video.hide();
 
   handPose = ml5.handPose(video, { flipHorizontal: true }, () => {
+    console.log('Model Loaded!');
     handPose.detectStart(video, gotHands);
   });
 
   frameRate(20);
-
-  characterX = 627 * scaleX;
-  characterY = 313 * scaleY;
-  objectX = 300 * scaleX;
-  objectY = 400 * scaleY;
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  updateScaleFactors();
-
-  if (currentAge === 0) {
-    characterX = 627 * scaleX;
-    characterY = 313 * scaleY;
-  } else {
-    characterX = 40 * scaleX;
-    characterY = 300 * scaleY;
-  }
-  objectX = 300 * scaleX;
-  objectY = 400 * scaleY;
+  scaleX = width / BASE_WIDTH;
+  scaleY = height / BASE_HEIGHT;
 }
+
 
 function updateScaleFactors() {
   scaleX = width / BASE_WIDTH;
