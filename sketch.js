@@ -263,3 +263,29 @@ function draw() {
     creditY = height;
   }
 }
+
+function drawStartScreen() {
+  background1(0);
+  let mainText = "NATURE";
+  let subText = "PRESS SPACE TO CONTINUE";
+  textAlign(CENTER, CENTER);
+  textSize(64 * scaleY);
+  stroke(255);
+  strokeWeight(12 * scaleX);
+  fill(0);
+  text(mainText, width / 2, height / 2 - 40 * scaleY);
+  noStroke();
+  fill(0);
+  text(mainText, width / 2, height / 2 - 40 * scaleY);
+
+  if (frameCount % 60 < 30) {
+    textSize(24 * scaleY);
+    stroke(255);
+    strokeWeight(6 * scaleX);
+    fill(0);
+    text(subText, width / 2, height / 2 + 30 * scaleY);
+    noStroke();
+    fill(0);
+    text(subText, width / 2, height / 2 + 30 * scaleY);
+  }
+}
