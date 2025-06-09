@@ -500,7 +500,7 @@ function background2(){
 function background3(){
   push();
   image(img_sky3,400 * scaleX,225 * scaleY,800 * scaleX,450 * scaleY);
-  image(img_ground2,400 * scaleX,225 * scaleY,800 * scaleX,450 * scaleY);
+  image(img_ground3,400 * scaleX,225 * scaleY,800 * scaleX,450 * scaleY);
 
   image(img_factory1,130 * scaleX,204 * scaleY,200 * scaleX,200 * scaleY);
   image(img_factory1,600 * scaleX,204 * scaleY,200 * scaleX,200 * scaleY);
@@ -529,7 +529,7 @@ function background3(){
 function background4(){
   push();
   image(img_sky4,400 * scaleX,225 * scaleY,800 * scaleX,450 * scaleY);
-  image(img_ground2,400 * scaleX,225 * scaleY,800 * scaleX,450 * scaleY);
+  image(img_ground4,400 * scaleX,225 * scaleY,800 * scaleX,450 * scaleY);
 
   image(img_factory1,130 * scaleX,204 * scaleY,200 * scaleX,200 * scaleY);
   image(img_factory1,600 * scaleX,204 * scaleY,200 * scaleX,200 * scaleY);
