@@ -767,6 +767,12 @@ function gotHands(results) {
 //--------새 움직임 함수
 function drawBird(){
   let birdY = baseY + sin(frameCount * 0.1) * 20 * scaleY;
-  
-  image(frameToggle1 ? birdImgs[0] : birdImgs[1], birdX, birdY, 100 * scaleX, 100 * scaleY);
+
+  // 크기를 60x60으로 줄임
+  image(
+    frameToggle1 ? birdImgs[0] : birdImgs[1],
+    birdX, birdY,
+    60 * scaleX, 60 * scaleY
+  );
 }
+
