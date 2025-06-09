@@ -187,8 +187,8 @@ function setup() {
   handPose.detectStart(video, gotHands);
   frameRate(20);
 
-  characterX = 400 * scaleX;
-  characterY = 300 * scaleY;
+  characterX = 627 * scaleX;
+  characterY = 313 * scaleY;
 
   objectX = 300 * scaleX;
   objectY = 400 * scaleY;
@@ -595,7 +595,7 @@ function background5(){
   image(img_ground5,400 * scaleX + background_move_n * scaleX,225 * scaleY,800 * scaleX,450 * scaleY);
   image(img_factory1,130 * scaleX,204 * scaleY,200 * scaleX,200 * scaleY);
   image(img_factory1,600 * scaleX,204 * scaleY,200 * scaleX,200 * scaleY);
-  making_smoke(370 * scaleX,110 * scaleY);
+  making_smoke(365 * scaleX,98 * scaleY);
   image(img_factory2,370 * scaleX,183 * scaleY,150 * scaleX,150 * scaleY);
 
   image(img_cut_tree_1,200 * scaleX + background_move_n * scaleX,400 * scaleY,100 * scaleX,100 * scaleY);
