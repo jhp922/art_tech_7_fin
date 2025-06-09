@@ -1,7 +1,5 @@
 // hand.js - 손 인식 및 물건 잡기 관련 로직
 
-let offsetX = 0, offsetY = 0;
-
 function gotHands(results) {
   hands = results;
 }
