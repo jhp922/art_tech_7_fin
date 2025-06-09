@@ -1,5 +1,7 @@
 // --- 배경 전환 및 페이드아웃 등 관련 함수 (background.js) ---
 
+let treeCut = [false, false, false];
+
 function background_maker() {
   let bg_offset = background_move_n * scaleX;
   switch (sence) {
@@ -125,16 +127,22 @@ function background3() {
   image(img_ground2, width / 2, height / 2, width, height);
   image(img_factory1, 130 * scaleX, 204 * scaleY, 200 * scaleX, 200 * scaleY);
   image(img_factory1, 600 * scaleX, 204 * scaleY, 200 * scaleX, 200 * scaleY);
+
   let treeW = 150 * scaleX, treeH = 270 * scaleY;
   let cutTreeW = 120 * scaleX, cutTreeH = 120 * scaleY;
+
   image(img_tree_1, 0, 190 * scaleY, treeW, treeH);
   image(img_cut_tree_1, 100 * scaleX, 300 * scaleY, cutTreeW, cutTreeH);
   image(img_cut_tree_1, 200 * scaleX, 280 * scaleY, cutTreeW, cutTreeH);
-  image(img_noleaf_tree_1, 300 * scaleX, 190 * scaleY, treeW, treeH);
+
+  // ✂️ 클릭으로 사라지는 잎없는 나무 3그루
+  if (!treeCut[0]) image(img_noleaf_tree_1, 300 * scaleX, 190 * scaleY, treeW, treeH);
+  if (!treeCut[1]) image(img_noleaf_tree_3, 500 * scaleX, 190 * scaleY, treeW, treeH);
+  if (!treeCut[2]) image(img_noleaf_tree_2, 600 * scaleX, 190 * scaleY, treeW, treeH);
+
   image(img_tree_2, 400 * scaleX, 170 * scaleY, treeW, treeH);
-  image(img_noleaf_tree_3, 500 * scaleX, 190 * scaleY, treeW, treeH);
-  image(img_noleaf_tree_2, 600 * scaleX, 190 * scaleY, treeW, treeH);
   image(img_tree_1, 800 * scaleX, 190 * scaleY, treeW, treeH);
+
   image(img_noleaf_tree_3, 0, 450 * scaleY, treeW, treeH);
   image(img_tree_1, 100 * scaleX, 450 * scaleY, treeW, treeH);
   image(img_noleaf_tree_1, 300 * scaleX, 430 * scaleY, treeW, treeH);
@@ -145,6 +153,7 @@ function background3() {
   image(img_tree_2, 800 * scaleX, 450 * scaleY, treeW, treeH);
   pop();
 }
+
 
 function background4() {
   push();
@@ -211,3 +220,24 @@ function making_smoke(x_position, y_position) {
   pop();
 }
 
+function treeClicked() {
+  if (sence !== 3) return;
+
+  if (!treeCut[0] &&
+      mouseX > 300 * scaleX && mouseX < 450 * scaleX &&
+      mouseY > 190 * scaleY && mouseY < 460 * scaleY) {
+    treeCut[0] = true;
+  }
+
+  if (!treeCut[1] &&
+      mouseX > 500 * scaleX && mouseX < 650 * scaleX &&
+      mouseY > 190 * scaleY && mouseY < 460 * scaleY) {
+    treeCut[1] = true;
+  }
+
+  if (!treeCut[2] &&
+      mouseX > 600 * scaleX && mouseX < 750 * scaleX &&
+      mouseY > 190 * scaleY && mouseY < 460 * scaleY) {
+    treeCut[2] = true;
+  }
+}
