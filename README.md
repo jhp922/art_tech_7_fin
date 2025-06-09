@@ -1,1 +1,0 @@
-# arttech_mid
