@@ -1,6 +1,5 @@
 // credit.js - 크레딧 롤링 화면
 
-let creditY;
 const creditTexts = [
   "기획",
   "임규빈: 애니메이션 주제, 디자인 요소 기획",
