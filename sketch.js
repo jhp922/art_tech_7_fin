@@ -142,7 +142,7 @@ function setup() {
   creditY = height;
   objectX = 1500 * scaleX;
   objectY = 450 * scaleY;
-  characterX = 750 * scaleX;
+  characterX = 40 * scaleX;
   characterY = 450 * scaleY;
 
   textFont(pixelFont);
@@ -156,8 +156,9 @@ function setup() {
 
   handPose = ml5.handPose(video, { flipHorizontal: true }, () => {
     console.log('Model Loaded!');
-    handPose.detectStart(video, gotHands);
   });
+  handPose.on("predict", gotHands);
+
 
   frameRate(20);
 }
@@ -258,10 +259,11 @@ function draw() {
   if (fadeout_on) fadeout();
   if (fadeon_on) fadeon();
 
-  if (!fadeon_on && sence == 5 && characterX == 750 * scaleX) {
-    state = "credit";
-    creditY = height;
-  }
+  if (!fadeon_on && sence == 5 && characterX > width + 50 * scaleX) {
+  state = "credit";
+  creditY = height;
+}
+
 }
 
 function drawStartScreen() {

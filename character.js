@@ -35,8 +35,8 @@ function drawCharacterAppearAnim() {
 }
 
 function drawCharacter(x, y, isGiven, ageIndex) {
-  let w = standImgs[ageIndex].width * scaleX;
-  let h = standImgs[ageIndex].height * scaleY;
+  let w = 100 * scaleX;
+  let h = 100 * scaleY;
 
   push();
   noSmooth();
