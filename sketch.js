@@ -125,14 +125,14 @@ function preload() {
   openHandImg = loadImage("assets/openHand.png");
   closedHandImg = loadImage("assets/closedHand.png");
 
-  standImgs[0] = loadImage("assets/child stand.png");
-  walkImgs[0] = loadImage("assets/child walk.png");
-  standImgs[1] = loadImage("assets/teen walk.png");
-  walkImgs[1] = loadImage("assets/teen walk 2.png");
-  standImgs[2] = loadImage("assets/adult walk.png");
-  walkImgs[2] = loadImage("assets/adult walk2.png");
-  standImgs[3] = loadImage("assets/old walk.png");
-  walkImgs[3] = loadImage("assets/old walk2.png");
+  standImgs[0] = loadImage("assets/child_stand.png");
+  walkImgs[0] = loadImage("assets/child_walk.png");
+  standImgs[1] = loadImage("assets/teen_walk.png");
+  walkImgs[1] = loadImage("assets/teen_walk2.png");
+  standImgs[2] = loadImage("assets/adult_walk.png");
+  walkImgs[2] = loadImage("assets/adult_walk2.png");
+  standImgs[3] = loadImage("assets/old_walk.png");
+  walkImgs[3] = loadImage("assets/old_walk2.png");
 }
 
 function setup() {
@@ -228,7 +228,7 @@ function draw() {
   }
 
   if (objectVisible) {
-    drawRecyclingBox(objectX, objectY);
+    drawObject(objectX, objectY);
   }
 
   updateHandState();
@@ -261,5 +261,31 @@ function draw() {
   if (!fadeon_on && sence == 5 && characterX == 750 * scaleX) {
     state = "credit";
     creditY = height;
+  }
+}
+
+function drawStartScreen() {
+  background1(0);
+  let mainText = "NATURE";
+  let subText = "PRESS SPACE TO CONTINUE";
+  textAlign(CENTER, CENTER);
+  textSize(64 * scaleY);
+  stroke(255);
+  strokeWeight(12 * scaleX);
+  fill(0);
+  text(mainText, width / 2, height / 2 - 40 * scaleY);
+  noStroke();
+  fill(0);
+  text(mainText, width / 2, height / 2 - 40 * scaleY);
+
+  if (frameCount % 60 < 30) {
+    textSize(24 * scaleY);
+    stroke(255);
+    strokeWeight(6 * scaleX);
+    fill(0);
+    text(subText, width / 2, height / 2 + 30 * scaleY);
+    noStroke();
+    fill(0);
+    text(subText, width / 2, height / 2 + 30 * scaleY);
   }
 }

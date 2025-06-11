@@ -1,15 +1,5 @@
 // object.js - 물건 위치, 상태, 충돌 관련 로직
 
-let objectX, objectY;
-let objectVisible = true;
-
-const itemDescs = [
-  "CAN PLAY WITH",
-  "CUT TREE",
-  "INDUSTRIAL DEVELOPMENT",
-  "RARE MINERAL CONSUMPTION"
-];
-
 function drawObject(x, y) {
   push();
   let size1 = 100 * ((scaleX + scaleY) / 2);
